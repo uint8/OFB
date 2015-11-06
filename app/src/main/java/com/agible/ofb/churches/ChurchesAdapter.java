@@ -26,7 +26,6 @@ int resid;
         this.resid = resid;
         this.context = context;
         this.values = values;
-        
     }
 
     @Override
