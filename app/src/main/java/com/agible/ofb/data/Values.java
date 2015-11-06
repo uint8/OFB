@@ -193,6 +193,22 @@ public class Values implements Serializable {
                 });
 
             }
+            public void getChurches(final OnFinishListener<MobileServiceList<Values.Churches>> listener){
+                Query query = new ExecutableQuery<>();
+                query.field("id").ne("null");
+                Futures.addCallback(mClient.getTable(Values.Churches.class).execute(query), new FutureCallback<MobileServiceList<Churches>>() {
+                    @Override
+                    public void onSuccess(MobileServiceList<Churches> result) {
+                        listener.onFinish(result);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+
+                    }
+                });
+
+            }
 
                 /**
                  * *** Object:  Table [dbo].[Churches]    Script Date: 6/16/2015 9:39:48 PM *****

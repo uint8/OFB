@@ -21,11 +21,13 @@ import android.widget.Toast;
 
 import com.agible.ofb.R;
 import com.agible.ofb.data.Values;
+import com.agible.ofb.listeners.OnFinishListener;
 import com.agible.ofb.utils.MActionBar;
 import com.agible.ofb.utils.Utilities;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceUser;
 
 import java.net.MalformedURLException;
@@ -34,6 +36,7 @@ import java.net.MalformedURLException;
 public class Churches extends ActionBarActivity {
     public MobileServiceClient mClient;
     public Values values;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,7 @@ public class Churches extends ActionBarActivity {
                     Values.APPLICATION_KEY,
                     this
             );
+
             values = new Values(getApplicationContext(), mClient);
             MobileServiceUser user = new MobileServiceUser(values.getUserId());
             user.setAuthenticationToken(values.getAuthToken());
@@ -60,6 +64,9 @@ public class Churches extends ActionBarActivity {
         } catch (MalformedURLException e){
             Log.e("Events", e.getMessage());
         }
+
+
+        //setup the adapter.
 
     }
 
@@ -94,6 +101,8 @@ public class Churches extends ActionBarActivity {
         public ChurchesFragment() {
         }
         Churches activity;
+        ChurchesAdapter adapter;
+        RecyclerView rv;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -120,8 +129,17 @@ public class Churches extends ActionBarActivity {
                 }
             });
 
-            RecyclerView rv = (RecyclerView)v.findViewById(R.id.churches_rv);
+            rv = (RecyclerView)v.findViewById(R.id.churches_rv);
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            //get our churches.
+            activity.values.getChurches(new OnFinishListener<MobileServiceList<Values.Churches>>() {
+                @Override
+                public void onFinish(MobileServiceList<Values.Churches>... objects) {
+                    adapter = new ChurchesAdapter(R.layout.church_item, getActivity(), activity.values, objects[0]);
+                    rv.setAdapter(adapter);
+                }
+            });
 
             return v;
         }

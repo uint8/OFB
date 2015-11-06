@@ -41,8 +41,8 @@ int resid;
 
     @Override
     public void onBindViewHolder(mViewHolder holder, int position) {
-
-
+        holder.left.setText(churches.get(position).ChurchName);
+        holder.right.setText(String.format("%s %s", churches.get(position).City, churches.get(position).Country));
 
     }
 
