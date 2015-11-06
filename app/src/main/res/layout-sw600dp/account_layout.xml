@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/account_ab"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_ab"
+        android:paddingStart="@dimen/account_padding_left"
+        android:paddingEnd="@dimen/account_padding_right">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_name_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/firstname_hint"
+                    android:inputType="textPersonName"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_fname"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/lastname_hint"
+                    android:inputType="textPersonName"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_lname"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_email_parent"
+                android:layout_below="@id/account_name_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    style="@style/TextFieldStyle"
+                    android:hint="@string/bio_hint"
+                    android:id="@+id/account_bio"/>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        style="@style/TextFieldStyle"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/email_hint"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/account_email"/>
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_centerHorizontal="true"
+                        style="@style/TextFieldStyle"
+                        android:hint="@string/skills_hint"
+                        android:layout_below="@id/account_email"
+                        android:id="@+id/account_skills"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_address_parent"
+                android:layout_below="@id/account_email_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address1_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_address1"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address2_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_address2"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_city_parent"
+                android:layout_below="@id/account_address_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/city_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_city"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/state_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_state"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_country_parent"
+                android:layout_below="@id/account_city_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/country_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_country"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/postalcode_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_postal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/account_phone_parent"
+                android:layout_below="@id/account_country_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/phone_hint"
+                    android:inputType="phone"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_phone"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/gender_hint"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/account_gender"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/account_phone_parent"
+                android:id="@+id/account_dob_parent">
+
+                <EditText
+                    android:layout_width="0dp"
+                    style="@style/TextFieldStyle"
+                    android:hint="@string/birthdate_hint"
+                    android:layout_weight="1"
+                    android:inputType="date"
+                    android:id="@+id/account_birthdate"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/done_name"
+                style="@style/ButtonStyle"
+                android:layout_below="@+id/account_dob_parent"
+                android:layout_marginTop="@dimen/account_done_margin_top"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/account_done"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

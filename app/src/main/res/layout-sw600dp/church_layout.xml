@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/church_ab"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/church_ab"
+        android:paddingStart="@dimen/account_padding_left"
+        android:paddingEnd="@dimen/account_padding_right">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/church_name_hint"
+                    android:inputType="textPersonName"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/church_name"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="@string/address1_hint"
+                    android:inputType="textPostalAddress"
+                    style="@style/TextFieldStyle"
+                    android:id="@+id/church_address1"/>
+
+                </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/TextFieldStyle"
+                android:hint="@string/address2_hint"
+                android:id="@+id/church_address2"/>
+            <EditText
+                android:layout_width="fill_parent"
+                style="@style/TextFieldStyle"
+                android:hint="@string/city_hint"
+                android:id="@+id/church_city"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/TextFieldStyle"
+                android:hint="@string/state_hint"
+                android:id="@+id/church_state"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/country_hint"
+                style="@style/TextFieldStyle"
+                android:id="@+id/church_country"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/postalcode_hint"
+                style="@style/TextFieldStyle"
+                android:id="@+id/church_postalcode"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/church_phone_hint"
+                style="@style/TextFieldStyle"
+                android:inputType="phone"
+                android:id="@+id/church_phone"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/church_email_hint"
+                style="@style/TextFieldStyle"
+                android:inputType="textEmailAddress"
+                android:id="@+id/church_email"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/church_website_hint"
+                style="@style/TextFieldStyle"
+                android:inputType="textUri"
+                android:id="@+id/church_website"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/pastor_name_hint"
+                style="@style/TextFieldStyle"
+                android:inputType="textPersonName"
+                android:id="@+id/pastor_name"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/pastor_phone_hint"
+                android:inputType="phone"
+                style="@style/TextFieldStyle"
+                android:id="@+id/pastor_phone"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/pastor_email_hint"
+                style="@style/TextFieldStyle"
+                android:id="@+id/pastor_email"/>
+
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/done_name"
+                    style="@style/ButtonStyle"
+                    android:layout_marginTop="@dimen/account_done_margin_top"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/church_done"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,60 @@
+<resources>
+
+    <style name="AppTheme" parent="MyTheme.Base">
+
+        <item name="android:windowTranslucentStatus">true</item>
+
+    </style>
+    <!-- Base theme applied no matter what API -->
+    <style name="MyTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
+        <item name="android:windowNoTitle">true</item>
+        <!--We will be using the toolbar so no need to show ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">#2196F3</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">#1976D2</item>
+        <!-- colorAccent is used as the default value for colorControlActivated
+             which is used to tint widgets -->
+        <item name="colorAccent">#FF4081</item>
+        <!-- You can also set colorControlNormal, colorControlActivated
+            colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
+
+    <!-- individual view styles -->
+    <style name="TextFieldStyle" parent="Base.Widget.AppCompat.EditText" >
+        <item name="android:background">@drawable/textfield_bg</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="ButtonStyle" parent="Base.Widget.AppCompat.ActionButton">
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="TextViewStyle" parent="TextAppearance.AppCompat">
+
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+
+    </style>
+
+</resources>

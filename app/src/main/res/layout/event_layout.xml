@@ -1,0 +1,199 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.agible.ourfathersbusiness.AddEventFragment">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/addevent_ab"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/background_margin_horizontal"
+        android:layout_marginEnd="@dimen/background_margin_horizontal"
+        android:layout_marginTop="@dimen/background_margin_vertical"
+        android:layout_marginBottom="@dimen/background_margin_vertical"
+        android:elevation="@dimen/background_elevation"
+        android:background="@drawable/background"
+        android:layout_below="@+id/addevent_ab">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_alignParentTop="true"
+                android:hint="Event Name"
+                android:id="@+id/addevent_name"
+                style="@style/TextFieldStyle"/>
+            <EditText
+                style="@style/TextFieldStyle"
+                android:layout_below="@+id/addevent_name"
+                android:id="@+id/addevent_desc"
+                android:layout_height="100dp"
+                android:hint="Event Description"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/addevent_desc"
+                android:id="@+id/addevent_addr_enter">
+
+                <EditText
+                    style="@style/TextFieldStyle"
+                    android:hint="Address 1"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/addevent_addr1"/>
+
+                <EditText
+                    style="@style/TextFieldStyle"
+                    android:hint="Address 2"
+                    android:layout_below="@id/addevent_addr1"
+                    android:id="@+id/addevent_addr2"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/addevent_addr2"
+                    android:id="@+id/addevent_citystate">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        style="@style/TextFieldStyle"
+                        android:hint="City "
+                        android:id="@+id/addevent_city"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        style="@style/TextFieldStyle"
+                        android:hint="State"
+                        android:id="@+id/addevent_state"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/addevent_citystate"
+                    android:id="@+id/addevent_countrypostalcode">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        style="@style/TextFieldStyle"
+                        android:hint="Country"
+                        android:id="@+id/addevent_country"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:layout_width="fill_parent"
+                        style="@style/TextFieldStyle"
+                        android:hint="Postal Code"
+                        android:id="@+id/addevent_postalcode"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addevent_addr_parent"
+                android:orientation="horizontal"
+                android:layout_below="@id/addevent_addr_enter">
+
+                <Button
+                    android:layout_width="fill_parent"
+                    style="@style/ButtonStyle"
+                    android:id="@+id/addevent_enteraddress"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:text="Enter Address"/>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    style="@style/ButtonStyle"
+                    android:id="@+id/addevent_mylocation"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:text="My Location"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addevent_genderpeople"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/addevent_addr_parent">
+
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_bg"
+                    android:id="@+id/addevent_gender"/>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_bg"
+                    android:id="@+id/addevent_people"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addevent_createcancel"
+                android:orientation="horizontal"
+                android:layout_below="@id/addevent_genderpeople"
+                android:paddingBottom="10dp">
+
+                <Button
+                    android:layout_width="fill_parent"
+                    style="@style/ButtonStyle"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/addevent_cancel"
+                    android:text="Cancel"/>
+
+                <Button
+                    android:layout_width="fill_parent"
+                    style="@style/ButtonStyle"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/addevent_create"
+                    android:text="Create"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

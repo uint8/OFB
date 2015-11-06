@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/login_ab"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerInParent="true">
+
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:id="@+id/login_facebook"
+        android:paddingEnd="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/login_facebook">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/facebook_account"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:text="Sign in with Facebook"/>
+
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:id="@+id/login_google"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_facebook"
+        android:background="@drawable/login_google">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/google_account"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:text="Sign in with Google  "/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:id="@+id/login_microsoft"
+        android:paddingEnd="20dp"
+        android:paddingStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_google"
+        android:background="@drawable/login_microsoft">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/microsoft_account"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:text="Sign in with Microsoft"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:id="@+id/login_twitter"
+        android:paddingEnd="20dp"
+        android:paddingStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_microsoft"
+        android:background="@drawable/login_twitter">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/twitter_account"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            android:text="Sign in with Twitter  "/>
+
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

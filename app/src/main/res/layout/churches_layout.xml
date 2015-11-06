@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.agible.ofb.churches.Churches$ChurchesFragment" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/churches_ab"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/background_margin_horizontal"
+        android:layout_marginEnd="@dimen/background_margin_horizontal"
+        android:layout_marginTop="@dimen/background_margin_vertical"
+        android:layout_marginBottom="@dimen/background_margin_vertical"
+        android:elevation="@dimen/background_elevation"
+        android:background="@drawable/background"
+        android:layout_below="@+id/churches_ab">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/churches_rv"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

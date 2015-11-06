@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ab_item_selected">#55ffffff</color>
+    <color name="ab_item_unselected">#00000000</color>
+
+    <color name="textfield_bg">#D1D1D1</color>
+
+    <color name="hint_color">#ff777777</color>
+    <color name="text_color">#8F2D28</color>
+    <color name="link_color">#00B7FF</color>
+    <color name="events_ab_bg">#FF908A</color>
+    <color name="profile_ab_bg">#8CFF92</color>
+    <color name="addevent_ab_bg">#9382FF</color>
+    <color name="notifications_ab_bg">#82DEFF</color>
+    <color name="churches_ab_bg">#FFD375</color>
+    <color name="button_bg_unselected">#ff009796</color>
+    <color name="button_bg_selected">#ff007170</color>
+    <color name="facebook_selected">#ff4775c1</color>
+    <color name="facebook_unselected">#3a5795</color>
+    <color name="twitter_selected">#ff5bb7ff</color>
+    <color name="twitter_unselected">#55acee</color>
+    <color name="google_selected">#ffff5442</color>
+    <color name="google_unselected">#dd4b39</color>
+    <color name="microsoft_selected">#ff91da00</color>
+    <color name="microsoft_unselected">#7cbb00</color>
+    <color name="event_item_selected">#dddddd</color>
+    <color name="event_item_unselected">#ffffff</color>
+    <color name="change_image_bg">#33000000</color>
+    <color name="background">#fff</color>
+
+</resources>
