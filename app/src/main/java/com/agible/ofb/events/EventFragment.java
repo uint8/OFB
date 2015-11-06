@@ -23,6 +23,7 @@ import com.agible.ofb.R;
 import com.agible.ofb.data.Values;
 import com.agible.ofb.listeners.EventsListener;
 import com.agible.ofb.utils.GPSTracker;
+import com.agible.ofb.utils.Utilities;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
@@ -180,18 +181,19 @@ public class EventFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utilities utilities = new Utilities(getActivity());
                 Values.Events event = new Values.Events();
                 String id = createId();
                 event.id = id;
                 event.CreatorUserID = values.getUserId();
-                event.Address1 = address1.getText().toString();
+                event.Address1 = utilities.getStringFromView(address1);
                 event.Address2 = address2.getText().toString();
-                event.City = city.getText().toString();
-                event.State = state.getText().toString();
-                event.Country = country.getText().toString();
-                event.PostalCode = postalCode.getText().toString();
-                event.Name = name.getText().toString();
+                event.City = utilities.getStringFromView(city);
+                event.State = utilities.getStringFromView(state);
+                event.Country = utilities.getStringFromView(country);
+                event.PostalCode = utilities.getStringFromView(postalCode);
+                event.Name = utilities.getStringFromView(name);
+                event.Description = utilities.getStringFromView(desc);
                 event.GenderNeeded = gender;
                 event.PeopleNeeded = pplneeded;
                 event.Anonymous = false;
@@ -205,35 +207,10 @@ public class EventFragment extends Fragment {
                 event.PersonLastName = "";
                 event.PersonIsAware = true;
                 event.ViewCount = 1;
-                event.Description = desc.getText().toString();
+
                 //run checks for each string.
-
-                if(event.Address1.length() < 3){
-                    toast();
+                if(!utilities.checkObjects(event.Address1, event.City, event.State, event.Name, event.Description, event.CreatorUserID, event.id, event.Country, event.PostalCode))
                     return;
-                }
-//                if(event.Address2.length() < 3){
-//                    toast();
-//                    return;
-//                }
-                if(event.State.length() < 2){
-                    toast();
-                    return;
-                }
-                if(event.Country.length() < 2){
-                    toast();
-                    return;
-                }
-                if(event.PostalCode.length() < 3){
-                    toast();
-                    return;
-                }
-                if(event.Description.length() < 3){
-                    toast();
-                    return;
-                }
-
-
 
                 Futures.addCallback(activity.values.addEvent(event), new FutureCallback<Values.Events>() {
                     @Override
