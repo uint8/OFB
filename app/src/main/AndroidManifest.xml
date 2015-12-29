@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.agible.ofb" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.agible.ofb">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -34,10 +36,14 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan|adjustResize">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
 
         <receiver
             android:name="com.microsoft.windowsazure.notifications.NotificationsBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -47,7 +53,7 @@
 
         <activity
             android:name=".events.Events"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,21 +66,34 @@
         </activity>
         <activity
             android:name=".users.Login"
-            android:label="@string/title_activity_login" >
-        </activity>
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".events.EventDetails"
-            android:label="@string/title_activity_event_details" >
-        </activity>
+            android:label="@string/title_activity_event_details" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="your_apikey" />
+            android:value="AIzaSyDBNnrWrG83QE8zX-69tEx9oEsbvsmm7wE" />
 
         <activity
             android:name=".churches.Churches"
-            android:label="@string/title_activity_churches" >
-        </activity>
+            android:label="@string/title_activity_churches" />
+        <activity
+            android:name=".churches.ChurchDetails"
+            android:label="Church Details" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+
+        <activity
+            android:name=".map.Map"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

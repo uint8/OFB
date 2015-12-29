@@ -36,7 +36,21 @@
                 style="@style/TextFieldStyle"/>
             <EditText
                 style="@style/TextFieldStyle"
-                android:layout_below="@+id/addevent_name"
+                android:hint="User's first and last name"
+                android:layout_below="@id/addevent_name"
+                android:id="@+id/addevent_user_name"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addevent_user_aware"
+                style="@style/TextViewStyle"
+                android:layout_below="@id/addevent_user_name"
+
+                android:layout_alignParentStart="true"
+                android:text="User is aware"/>
+            <EditText
+                style="@style/TextFieldStyle"
+                android:layout_below="@+id/addevent_user_aware"
                 android:id="@+id/addevent_desc"
                 android:layout_height="100dp"
                 android:hint="Event Description"

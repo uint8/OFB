@@ -1,9 +1,9 @@
 package com.agible.ofb.churches;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 import com.agible.ofb.R;
 import com.agible.ofb.data.Values;
 import com.agible.ofb.listeners.OnFinishListener;
+import com.agible.ofb.listeners.OnItemClickListener;
 import com.agible.ofb.utils.MActionBar;
 import com.agible.ofb.utils.Utilities;
 import com.google.common.util.concurrent.FutureCallback;
@@ -30,6 +30,8 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.authentication.MobileServiceUser;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 
 
@@ -133,13 +135,32 @@ public class Churches extends ActionBarActivity {
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             //get our churches.
-            activity.values.getChurches(new OnFinishListener<MobileServiceList<Values.Churches>>() {
+            Futures.addCallback(activity.values.getChurches(0), new FutureCallback<MobileServiceList<Values.Churches>>() {
                 @Override
-                public void onFinish(MobileServiceList<Values.Churches>... objects) {
-                    adapter = new ChurchesAdapter(R.layout.church_item, getActivity(), activity.values, objects[0]);
+                public void onSuccess(MobileServiceList<Values.Churches> result) {
+                    adapter = new ChurchesAdapter(R.layout.church_item, getActivity(), activity.values, result);
                     rv.setAdapter(adapter);
+                    adapter.setOnItemClickListener(new OnItemClickListener<Values.Churches>() {
+                        @Override
+                        public void onClick(Values.Churches item, int i) {
+                            try {
+                                Serializable s = Values.serialize(item);
+                                Intent intent = new Intent(getActivity(), ChurchDetails.class);
+                                intent.putExtra(ChurchDetails.CHURCH_ARG, s);
+                                startActivity(intent);
+                            } catch (IOException e) {
+                                Log.e("Churches", e.getMessage());
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
                 }
             });
+
 
             return v;
         }
@@ -150,7 +171,7 @@ public class Churches extends ActionBarActivity {
             try{
                 this.activity = (Churches)activity;
             }catch (ClassCastException e){
-
+                Log.e("Churches", e.getMessage());
             }
         }
 
@@ -180,7 +201,7 @@ public class Churches extends ActionBarActivity {
             actionBar.setTitleColor(Color.WHITE);
             actionBar.setTitleSize(20f);
 
-            final EditText name = (EditText) v.findViewById(R.id.church_name);
+            final EditText name = (EditText) v.findViewById(R.id.church_details_name);
             final EditText addr1 = (EditText)v.findViewById(R.id.church_address1);
             final EditText addr2 = (EditText)v.findViewById(R.id.church_address2);
             final EditText city = (EditText)v.findViewById(R.id.church_city);
@@ -257,7 +278,7 @@ public class Churches extends ActionBarActivity {
             try{
                 this.activity = (Churches)activity;
             }catch (ClassCastException e){
-
+                Log.e("Churches", e.getMessage());
             }
         }
 

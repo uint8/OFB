@@ -8,8 +8,8 @@
     <dimen name="event_item_corner_radius">0dp</dimen>
     <dimen name="profile_image_height">150dp</dimen>
     <dimen name="profile_image_width">150dp</dimen>
-    <dimen name="background_margin_horizontal">5dp</dimen>
-    <dimen name="background_margin_vertical">5dp</dimen>
+    <dimen name="background_margin_horizontal">2dp</dimen>
+    <dimen name="background_margin_vertical">2dp</dimen>
     <dimen name="background_elevation">5dp</dimen>
     <dimen name="background_radius">3dp</dimen>
     <dimen name="background_margin">5dp</dimen>
@@ -23,4 +23,5 @@
     <dimen name="profile_stats_height">150dp</dimen>
     <dimen name="church_padding_left">7dp</dimen>
     <dimen name="church_padding_right">7dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

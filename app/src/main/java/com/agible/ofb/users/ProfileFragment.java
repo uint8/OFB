@@ -25,6 +25,8 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,7 +158,7 @@ public class ProfileFragment extends Fragment {
 
         try {
             List<Object> objects = activity.values.loadObjects(Values.Users.class);
-            Values.Users user = (Values.Users) objects.get(0);
+            final Values.Users user = (Values.Users) objects.get(0);
 
 
             name.setText(user.FirstName + " " + user.LastName);
@@ -165,7 +167,26 @@ public class ProfileFragment extends Fragment {
             skills.setText(user.Skills);
             status.setText(getStatus(user.Status));
             bio.setText(user.Bio);
+            Futures.addCallback(activity.values.getChurch(user.ChurchID), new FutureCallback<Values.Churches>() {
+                @Override
+                public void onSuccess(Values.Churches result) {
+                    String church_text;
+                    if(user.Status == Values.STATUS_PENDING)
+                        church_text = "Pending: " + result.ChurchName;
+                    else if(user.Status == Values.STATUS_BLOCKED)
+                        church_text = "Blocked: " + result.ChurchName;
+                    else
+                        church_text = result.ChurchName;
+                    church.setText(church_text);
+                }
 
+                @Override
+                public void onFailure(Throwable t) {
+                    /**TODO
+                     * add something here.
+                     */
+                }
+            });
             String addr = user.Address1 + ", " +
                     user.Address2 + ", " +
                     user.City + " " +

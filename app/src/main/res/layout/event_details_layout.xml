@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     tools:context="com.agible.ofb.events.EventDetails$DetailsFragment">
 
     <RelativeLayout
@@ -41,14 +43,49 @@
         <TextView
             style="@style/TextViewStyle"
             android:text="@string/default_leader"
+            android:id="@+id/event_details_leader_name"
             android:layout_alignParentEnd="true"/>
 
         </RelativeLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_details_leader_parent"
+            style="@style/TextViewStyle"
+            android:id="@+id/event_details_description"
+            android:text="Description"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_description"
+        android:id="@+id/event_details_user_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="For: unknown"
+            style="@style/TextViewStyle"
+            android:id="@+id/event_details_user_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_details_user_name"
+            style="@style/TextViewStyle"
+            android:text="User is aware of planned event."
+            android:id="@+id/event_details_user_aware"/>
+
+    </RelativeLayout>
+
     <TextView
         style="@style/TextViewStyle"
         android:id="@+id/event_details_address"
-        android:layout_below="@id/event_details_leader_parent"/>
+        android:layout_below="@id/event_details_user_parent"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -95,7 +132,7 @@
             android:layout_height="wrap_content"
             style="@style/ButtonStyle"
             android:text="@string/action1_text"
-            android:id="@+id/event_details_action1"
+            android:id="@+id/event_details_join"
             android:layout_weight="1"/>
 
         <Button
@@ -103,7 +140,7 @@
             android:layout_height="wrap_content"
             style="@style/ButtonStyle"
             android:text="@string/action2_text"
-            android:id="@+id/event_details_action2"
+            android:id="@+id/event_details_lead"
             android:layout_weight="1"/>
 
         </LinearLayout>
@@ -118,11 +155,12 @@
         android:id="@+id/event_details_map_text"
         android:layout_below="@id/event_details_status"
         android:text="@string/map_view"/>
-
-    <!--<com.google.android.gms.maps.MapView android:id="@+id/event_details_map_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_below="@id/event_details_map_text"-->
-        <!--android:layout_height="wrap_content" />-->
+        <com.mapbox.mapboxsdk.views.MapView
+            android:id="@+id/mapview"
+            android:layout_width="fill_parent"
+            android:layout_height="500dp"
+            android:layout_below="@id/event_details_map_text"
+            mapbox:access_token="pk.eyJ1Ijoic211bmRhbGwiLCJhIjoiY2lodjQyaGhxMDF5NnQzbTE5czZ4cTM1MSJ9.WA7XSRVrRFEqPdLNk8OvGg"/>
     </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

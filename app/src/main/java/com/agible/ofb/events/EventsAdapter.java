@@ -83,7 +83,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return;
 
         switch(items.get(i).Status){
-            case 1:
+            case Values.STATUS_PENDING:
                 if(pending)
                      break;
 
@@ -96,7 +96,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 vh.name.setTextSize(20f);
                 vh.item.setPadding(0, 0, 0, 0);
                 return;
-            case 2:
+            case Values.STATUS_ACTIVE:
                 if(active)
                     break;
 
@@ -109,7 +109,7 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 vh.name.setTextSize(20f);
                 vh.item.setPadding(0, 0, 0, 0);
                 return;
-            case 3:
+            case Values.STATUS_COMPLETED:
                 if(completed)
                     break;
                 completed = true;
@@ -140,7 +140,10 @@ public class EventsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return items.size() + items.get(items.size() - 1).Status;
+        if(items.size() != 0)
+            return items.size() + items.get(items.size() - 1).Status;
+        else
+            return 0;
 
 
     }

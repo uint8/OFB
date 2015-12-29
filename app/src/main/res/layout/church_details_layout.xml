@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.agible.ofb.churches.ChurchDetails">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/church_details_ab"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Church Name"
+        android:textSize="28sp"
+        android:id="@+id/church_details_name"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="89dp"
+        style="@style/TextViewStyle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Church Address"
+        android:id="@+id/church_details_address"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/church_details_name"
+        style="@style/TextViewStyle"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Church Phone"
+        android:id="@+id/church_details_phone"
+        style="@style/TextViewStyle"
+        android:autoLink="phone"
+        android:layout_below="@+id/church_details_address"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Church Email"
+        android:id="@+id/church_details_email"
+        style="@style/TextViewStyle"
+        android:autoLink="all"
+        android:layout_below="@+id/church_details_phone"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pastor&apos;s name"
+        android:id="@+id/church_details_pastor_name"
+        style="@style/TextViewStyle"
+        android:layout_marginTop="82dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/church_details_email"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pastor&apos;s phone"
+        android:id="@+id/church_details_pastor_phone"
+        style="@style/TextViewStyle"
+        android:autoLink="phone"
+        android:layout_below="@id/church_details_pastor_name"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pastor&apos;s email"
+        android:id="@+id/church_details_pastor_email"
+        style="@style/TextViewStyle"
+        android:autoLink="all"
+        android:layout_below="@+id/church_details_pastor_phone"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join church"
+        android:id="@+id/church_details_join"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        style="@style/ButtonStyle"
+        android:layout_marginBottom="82dp" />
+
+
+</RelativeLayout>

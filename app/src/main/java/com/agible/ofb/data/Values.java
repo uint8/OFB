@@ -9,6 +9,7 @@
         import android.graphics.Color;
         import android.util.Base64;
         import android.util.Log;
+        import android.util.Pair;
         import android.widget.EditText;
         import android.widget.Toast;
 
@@ -58,9 +59,35 @@ public class Values implements Serializable {
             public static final String ADDRESS_CLASS = "Addresses";
 
             //account status codes.
-            public static final int STATUS_PENDING = 100;
+            public static final int STATUS_PENDING = 1;
+            public static final int STATUS_ACTIVE = 2;
+            public static final int STATUS_COMPLETED = 3;
             public static final int STATUS_APROVED = 200;
             public static final int STATUS_BLOCKED = 303;
+
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            ////////API/////////////////////////////////////////////////////////////////////////////////////////
+            final static String userApi = "user";
+            final static String eventApi = "event";
+            final static String churchApi = "church";
+            final static String messagesApi = "message";
+            final static String codeApi = "code";
+            final static String post = "POST";
+            final static String get = "GET";
+            final static String put = "PUT";
+            final static String delete = "DELETE";
+            final static String join = "JOIN";
+            final static String lead = "LEAD";
+            final static String leave = "LEAVE";
+            final static String start = "START";
+            final static String end = "END";
+            final static String cancel = "CANCEL";
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            //category status codes.
+            public static final int CATEGORY_DEFAULT = 101;
+
 
             public Context context;
             public MobileServiceClient mClient;
@@ -105,7 +132,17 @@ public class Values implements Serializable {
             }
 
             public String getChurchId() {
-                return context.getSharedPreferences(SPP_NAME, Context.MODE_PRIVATE).getString(CHURCH_ID, null);
+                //return context.getSharedPreferences(SPP_NAME, Context.MODE_PRIVATE).getString(CHURCH_ID, null);
+
+                try{
+                    List<Object> objects = loadObjects(Values.Users.class);
+                    final Values.Users user = (Values.Users) objects.get(0);
+                    return user.ChurchID;
+                } catch (IOException | ClassNotFoundException e){
+                    Log.e("Values", e.getMessage());
+                    return null;
+                }
+
             }
 
 
@@ -114,21 +151,15 @@ public class Values implements Serializable {
                 return mClient.getCurrentUser() != null && mClient.getCurrentUser().getAuthenticationToken() != null && mClient.getCurrentUser().getUserId() != null && mClient.getCurrentUser().getAuthenticationToken().length() > 10 && mClient.getCurrentUser().getUserId().length() > 10;
             }
 
-            public void getUser(final OnFinishListener<Object> listener) {
 
-                Futures.addCallback(getUsers(mClient.getCurrentUser().getUserId()), new FutureCallback<Values.Users>() {
-                    @Override
-                    public void onSuccess(final Users user) {
-                        listener.onFinish(user);
-                    }
 
-                    @Override
-                    public void onFailure(Throwable t) {
 
-                    }
-                });
-            }
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///API///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            //login
             public void login(final String userId, String authToken) {
 
                 if(userId == null || authToken == null)
@@ -138,17 +169,19 @@ public class Values implements Serializable {
                 user.setAuthenticationToken(authToken);
                 mClient.setCurrentUser(user);
 
-                getUser(new OnFinishListener<Object>() {
+                Futures.addCallback(getUser(userId), new FutureCallback<Users>() {
                     @Override
-                    public void onFinish(Object... objects) {
-
-                        Values.Users usr = (Values.Users) objects[0];
+                    public void onSuccess(Users result) {
                         try {
-
-                            saveObjects(usr);
+                            saveObjects(result);
                         } catch (IOException e) {
                             Log.e("Values", e.getMessage());
                         }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        Log.e("Values", t.getMessage());
                     }
                 });
 
@@ -156,9 +189,201 @@ public class Values implements Serializable {
 
             }
 
-            public void logout(){
+            //post user
+            public ListenableFuture<Values.Users> addUser(Values.Users user){
+                user.id = "";
+                return mClient.invokeApi(userApi, user, post, null, Values.Users.class);
+            }
+            //put user
+            public ListenableFuture<Values.Users> updateUser(Values.Users user){
+                return mClient.invokeApi(userApi, user, put, null, Values.Users.class);
+            }
+            //get user
+            public ListenableFuture<Values.Users> getUser(String userId){
+                Pair<String, String> param = new Pair<>("UserId",  userId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(userApi, get, params, Values.Users.class);
+            }
+            //delete user//?
+            public ListenableFuture<Values.Message> deleteUser(String userId){
+                Pair<String, String> param = new Pair<>("UserId",  userId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(userApi, delete, params, Values.Message.class);
+            }
+            //post event
+            public ListenableFuture<Values.Events> addEvent(Values.Events event){
+                event.id = "";
+                return mClient.invokeApi(eventApi, event, post, null, Values.Events.class);
+            }
+            //put event
+            public ListenableFuture<Values.Events> updateEvent(Values.Events event){
+                return mClient.invokeApi(eventApi, event, put, null, Values.Events.class);
+            }
+            //get event//?
+            public ListenableFuture<Values.Events> getEvent(String eventId){
+                Pair<String, String> param = new Pair<>("EventId",  eventId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(eventApi, get, params, Values.Events.class);
+            }
+            //get events
+            @SuppressWarnings("unchecked")
+            public ListenableFuture<MobileServiceList<Values.Events>> getEvents(String churchId){
+                Pair<String, String> param = new Pair<>("ChurchId", churchId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(eventApi, get, params, (Class<MobileServiceList<Values.Events>>)(Object)Values.Events.class);
 
             }
+            //delete event//?
+            public ListenableFuture<Values.Message> deleteEvent(String eventId){
+                Pair<String, String> param = new Pair<>("EventId",  eventId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(eventApi, delete, params, Values.Message.class);
+            }
+            //post church
+            public ListenableFuture<Values.Churches> addChurch(Values.Churches church){
+                return mClient.invokeApi(churchApi, church, post, null, Values.Churches.class);
+            }
+            //put church
+            public ListenableFuture<Values.Churches> updateChurch(Values.Churches church){
+                return mClient.invokeApi(churchApi, church, put, null, Values.Churches.class);
+            }
+            //get church//?f
+            public ListenableFuture<Values.Churches> getChurch(String churchId){
+                Pair<String, String> param = new Pair<>("ChurchId", churchId);
+                List<Pair<String, String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(churchApi, get, params, Values.Churches.class);
+            }
+            //get churches
+            @SuppressWarnings("unchecked")
+            public ListenableFuture<MobileServiceList<Values.Churches>> getChurches(int page){
+                Pair<String, String> param = new Pair<>("Page", String.valueOf(page));
+                List<Pair<String, String>>params = new ArrayList<>();
+                params.add(param);
+
+                return mClient.invokeApi(churchApi, get, params, (Class<MobileServiceList<Values.Churches>>)(Object)Values.Churches.class);
+            }
+            @SuppressWarnings("unchecked")
+            public ListenableFuture<MobileServiceList<Values.Churches>> searchChurches(String query){
+                Pair<String, String> param = new Pair<>("Query", query);
+                List<Pair<String, String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(churchApi, get, params, (Class<MobileServiceList<Values.Churches>>)(Object)Values.Churches.class);
+            }
+            //delete church//?
+            public ListenableFuture<Values.Message> deleteChurch(String churchId){
+                Pair<String, String> param = new Pair<>("ChurchId", churchId);
+                List<Pair<String, String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(churchApi, delete, params, Values.Message.class);
+            }
+            //get join_event
+            public ListenableFuture<Values.Message> joinEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", join);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //get lead_event
+            public ListenableFuture<Values.Message> leadEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", lead);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //get lead_event
+            public ListenableFuture<Values.Message> startEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", start);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //get lead_event
+            public ListenableFuture<Values.Message> endEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", end);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //get lead_event
+            public ListenableFuture<Values.Message> deleteEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", delete);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //get lead_event
+            public ListenableFuture<Values.Message> cancelEvent(String eventId, String userId){
+                Pair<String, String> param = new Pair<>("EventId", eventId);
+                Pair<String, String> param1 = new Pair<>("UserId", userId);
+                Pair<String, String> param2 = new Pair<>("Action", cancel);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                params.add(param1);
+                params.add(param2);
+                return mClient.invokeApi(eventApi, put, params, Values.Message.class);
+            }
+            //post message
+            public ListenableFuture<Values.Messages> addMessage(Values.Messages message){
+                message.id = "";
+                return mClient.invokeApi(messagesApi, message, post, null, Values.Messages.class);
+            }
+            //get messages
+            @SuppressWarnings("unchecked")
+            public ListenableFuture<MobileServiceList<Values.Messages>> getMessages(String eventId){
+                Pair<String, String> param = new Pair<>("EventId",  eventId);
+                List<Pair<String,String>>params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(messagesApi, get, params, (Class<MobileServiceList<Values.Messages>>)(Object)Values.Messages.class);
+            }
+            //check user
+            /**TODO **/
+            //send code
+            public ListenableFuture<Values.Message> sendCode(String userId){
+                Pair<String, String> param = new Pair<>("UserId", userId);
+                List<Pair<String, String>> params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(codeApi, get, params, Values.Message.class);
+            }
+
+            //clear code
+            public ListenableFuture<Values.Message> clearCode(String userId){
+                Pair<String, String> param = new Pair<>("UserId", userId);
+                List<Pair<String, String>> params = new ArrayList<>();
+                params.add(param);
+                return mClient.invokeApi(codeApi, delete, params, Values.Message.class);
+            }
+
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
             public void saveObjects(Serializable... objects) throws IOException{
 
@@ -176,44 +401,14 @@ public class Values implements Serializable {
                 return objects;
             }
 
-            public void getEvents(final OnFinishListener<MobileServiceList<Values.Events>> listener) {
 
-                Query query = new ExecutableQuery<>();
-                query.field("ChurchID").eq(getChurchId());
-                Futures.addCallback(mClient.getTable(Values.Events.class).execute(query), new FutureCallback<MobileServiceList<Values.Events>>() {
-                    @Override
-                    public void onSuccess(MobileServiceList<Values.Events> result) {
-                        listener.onFinish(result);
-                    }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        listener.onFinish(null);
-                    }
-                });
 
-            }
-            public void getChurches(final OnFinishListener<MobileServiceList<Values.Churches>> listener){
-                Query query = new ExecutableQuery<>();
-                query.field("id").ne("null");
-                Futures.addCallback(mClient.getTable(Values.Churches.class).execute(query), new FutureCallback<MobileServiceList<Churches>>() {
-                    @Override
-                    public void onSuccess(MobileServiceList<Churches> result) {
-                        listener.onFinish(result);
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-
-                    }
-                });
-
-            }
 
                 /**
                  * *** Object:  Table [dbo].[Churches]    Script Date: 6/16/2015 9:39:48 PM *****
                  */
-                public static class Churches {
+                public static class Churches implements Serializable {
 
                     public String id;
 
@@ -255,27 +450,16 @@ public class Values implements Serializable {
 
                 }
 
-                public ListenableFuture<Churches> updateChurch (Churches church){
-                    return mClient.getTable(Churches.class).update(church);
-                }
-                public ListenableFuture<Churches> getChurch (Object id){
-                    return mClient.getTable(Churches.class).lookUp(id);
-                }
-                public ListenableFuture<Churches> addChurch (Churches church){
-                    return mClient.getTable(Churches.class).insert(church);
-                }
-                public ListenableFuture<Void> deleteChurch (Churches church){
-                    return mClient.getTable(Churches.class).delete(church);
-                }
-
                 /**
                  * *** Object:  Table [dbo].[Events]    Script Date: 6/16/2015 9:39:48 PM *****
                  */
 
 
-                public static class Events {
+                public static class Events implements Serializable{
 
                     public String id;
+
+                    public String ChurchId;
 
                     public String CreatorUserID; //int]
 
@@ -290,6 +474,8 @@ public class Values implements Serializable {
                     public int Category; //int]NULL,
 
                     public int Status; //int]NULL,
+
+                    public long CreationDate; //int
 
                     public long StartDate; //int]NULL,
 
@@ -327,19 +513,6 @@ public class Values implements Serializable {
 
                 }
 
-                public ListenableFuture<Events> updateEvent (Events event){
-                    return mClient.getTable(Events.class).update(event);
-                }
-                public ListenableFuture<Events> getEvent (Object id){
-                    return mClient.getTable(Events.class).lookUp(id);
-                }
-                public ListenableFuture<Events> addEvent (Events event){
-                    return mClient.getTable(Events.class).insert(event);
-                }
-                public ListenableFuture<Void> deleteEvent (Events event){
-                    return mClient.getTable(Events.class).delete(event);
-                }
-
                 /**
                  * *** Object:  Table [dbo].[Messages]    Script Date: 6/16/2015 9:39:49 PM *****
                  */
@@ -348,40 +521,15 @@ public class Values implements Serializable {
 
                     public String id;
 
-                    public String FromUserID; //int]NULL,
+                    public String UserID; //int]NULL,
 
                     public String EventID; //int]NULL,
 
-                    public String MessageText; //nvarchar](100)NULL,
+                    public String Message; //nvarchar](100)NULL,
 
 
                 }
 
-                /****** Object:  Table [dbo].[Statistics]    Script Date: 6/16/2015 9:39:49 PM ******/
-
-
-                public static class Statistics {
-
-                    public String id;
-
-                    public String UserID; //int] NOT NULL,
-
-                    public int Category; //int] NOT NULL,
-
-                    public long Date; //int] NOT NULL,
-
-                }
-                public ListenableFuture<MobileServiceList<Statistics>> getStatistics () {
-                    Query query = new ExecutableQuery<Statistics>();
-                    long history = new Date().getTime() - HISTORY_LENGTH;
-                    System.out.println("History " + history);
-                    query.field("DateCreated").gt(history).and().field("UserId").eq(mClient.getCurrentUser().getUserId());
-                    return mClient.getTable(Statistics.class).execute(query);
-                }
-                public ListenableFuture<Statistics> addStatistics (Statistics statistics){
-                    return mClient.getTable(Statistics.class).insert(statistics);
-
-                }
 
                 /****** Object:  Table [dbo].[UserEvents]    Script Date: 6/16/2015 9:39:49 PM ******/
 
@@ -397,19 +545,6 @@ public class Values implements Serializable {
                 }
                 /****** Object:  Table [dbo].[Users]    Script Date: 6/16/2015 9:39:49 PM ******/
 
-
-                public ListenableFuture<Users> updateUsers (Users user){
-                    return mClient.getTable(Users.class).update(user);
-                }
-                public ListenableFuture<Users> getUsers (Object id){
-                    return mClient.getTable(Users.class).lookUp(id);
-                }
-                public ListenableFuture<Users> addUsers (Users user){
-                    return mClient.getTable(Users.class).insert(user);
-                }
-                public ListenableFuture<Void> deleteUsers (Users user){
-                    return mClient.getTable(Users.class).delete(user);
-                }
 
 
                 public static class Users implements Serializable {
@@ -454,11 +589,20 @@ public class Values implements Serializable {
 
                     public String PostalCode; //nvarchar](50)NULL,
 
+                    public String VerificationCode;
 
                 }
 
+            public static class Message {
+
+                int Status;
+
+                String Message;
+
+            }
+
             /** Read the object from Base64 string. */
-            private static Object deserialize( String s ) throws IOException ,
+            public static Object deserialize( String s ) throws IOException ,
                     ClassNotFoundException {
 
                 byte [] data = Base64.decode( s, Base64.DEFAULT );
@@ -470,7 +614,7 @@ public class Values implements Serializable {
             }
 
             /** Write the object to a Base64 string. */
-            private static String serialize( Serializable o ) throws IOException {
+            public static String serialize( Serializable o ) throws IOException {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream( baos );
                 oos.writeObject( o );

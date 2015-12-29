@@ -31,7 +31,7 @@
                     android:hint="@string/church_name_hint"
                     android:inputType="textPersonName"
                     style="@style/TextFieldStyle"
-                    android:id="@+id/church_name"/>
+                    android:id="@+id/church_details_name"/>
 
                 <EditText
                     android:layout_width="0dp"

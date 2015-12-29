@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import com.agible.ofb.R;
 import com.agible.ofb.data.Values;
+import com.agible.ofb.listeners.OnItemClickListener;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by seth on 6/25/15.
@@ -20,6 +24,12 @@ MobileServiceList<Values.Churches> churches;
 int resid;
     Context context;
     Values values;
+
+    OnItemClickListener<Values.Churches> onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener <Values.Churches>onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public ChurchesAdapter(int resid, Context context, Values values, MobileServiceList<Values.Churches> churches){
         this.churches = churches;
@@ -40,10 +50,15 @@ int resid;
     }
 
     @Override
-    public void onBindViewHolder(mViewHolder holder, int position) {
+    public void onBindViewHolder(mViewHolder holder, final int position) {
         holder.left.setText(churches.get(position).ChurchName);
         holder.right.setText(String.format("%s %s", churches.get(position).City, churches.get(position).Country));
-
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onClick(churches.get(position), position);
+            }
+        });
     }
 
     @Override

@@ -12,14 +12,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.agible.ofb.listeners.OnFinishListener;
+import com.agible.ofb.map.Map;
 import com.agible.ofb.utils.MActionBar;
 import com.agible.ofb.listeners.EventsListener;
 import com.agible.ofb.listeners.OnItemClickListener;
 import com.agible.ofb.R;
 import com.agible.ofb.data.Values;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -40,6 +48,7 @@ public class EventsFragment extends Fragment {
     private RecyclerView recyclerView;
     private EventsListener listener;
     private EventsAdapter adapter;
+    private Events activity;
 
     /**
      * Use this factory method to create a new instance of
@@ -77,6 +86,7 @@ public class EventsFragment extends Fragment {
 
         try {
             listener = (EventsListener) activity;
+            this.activity = (Events)activity;
         }catch (Exception e){
             Log.e("EventsFragment", e.getMessage());
         }
@@ -100,62 +110,50 @@ public class EventsFragment extends Fragment {
         recyclerView = (RecyclerView)v.findViewById(R.id.events_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        List<EventItem>dummydata = new ArrayList<>();
-        List<Values.Events> data = new ArrayList<>();
-        Values.Events event1 = new Values.Events();
-        event1.Anonymous = false;
-        event1.Category = 1;
-        event1.Status = 1;
-        event1.id = "mEventId";
-        event1.Name = "Clean Rob's shed.";
-        data.add(event1);
-        Values.Events event2 = new Values.Events();
-        event2.Anonymous = false;
-        event2.Category = 1;
-        event2.Status = 1;
-        event2.id = "mEventId";
-        event2.Name = "Move Kathy's bee hives.";
-        data.add(event2);
-        Values.Events event3 = new Values.Events();
-        event3.Anonymous = false;
-        event3.Category = 1;
-        event3.Status = 2;
-        event3.id = "mEventId";
-        event3.Name = "Repair Mike's roof.";
-        data.add(event3);
-        Values.Events event4 = new Values.Events();
-        event4.Anonymous = false;
-        event4.Category = 1;
-        event4.Status = 3;
-        event4.id = "mEventId";
-        event4.Name = "Paint Trevor's house.";
-        data.add(event4);
-        Values.Events event5 = new Values.Events();
-        event5.Anonymous = false;
-        event5.Category = 1;
-        event5.Status = 2;
-        event5.id = "mEventId";
-        event5.Name = "Handout Glow tracks.";
-        data.add(event5);
-        Values.Events event6 = new Values.Events();
-        event6.Anonymous = false;
-        event6.Category = 1;
-        event6.Status = 2;
-        event6.id = "mEventId";
-        event6.Name = "Move Amy into her new home.";
-        data.add(event6);
 
-
-        adapter = new EventsAdapter(getActivity(), data, R.layout.event_item);
-        adapter.setOnItemClickListener(new OnItemClickListener<Values.Events>() {
+        Futures.addCallback(activity.values.getEvents(activity.values.getChurchId()), new FutureCallback<MobileServiceList<Values.Events>>() {
             @Override
-            public void onClick(Values.Events item, int i) {
-                System.out.println(item.Name);
-                Intent intent = new Intent(getActivity(), EventDetails.class);
-                startActivity(intent);
+            public void onSuccess(MobileServiceList<Values.Events> result) {
+
+                result.get(0).Status = Values.STATUS_PENDING;
+                //initiate a adapter.
+                adapter = new EventsAdapter(getActivity(), result, R.layout.event_item);
+
+                //set the on click listener.
+                adapter.setOnItemClickListener(new OnItemClickListener<Values.Events>() {
+                    @Override
+                    public void onClick(Values.Events item, int i) {
+                        System.out.println(item.Name);
+
+
+                        startActivity(new Intent(getActivity(), Map.class));
+                        //return;
+
+                        /** TODO REMOVE COMMENTING LATER **/
+                        //try {
+
+
+
+
+//                            //create an intent and pass the event item as a string into the activity.
+//                            Intent intent = new Intent(getActivity(), EventDetails.class);
+//                            intent.putExtra(EventDetails.EVENT_ARG, Values.serialize(item));
+//                            startActivity(intent);
+                        //} catch (IOException e) {
+                        //  Log.e("EventsFragment", e.getMessage());
+                        // }
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
             }
         });
-        recyclerView.setAdapter(adapter);
+
+        //set on click listeners for right and left actionbar buttons.
         actionBar.setLeftOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
